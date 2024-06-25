@@ -6,3 +6,4 @@ class Apiresponse{
         this.success=stausCode <400
     }
 }
+export default Apiresponse;
