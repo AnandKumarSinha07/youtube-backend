@@ -61,6 +61,37 @@ userSchema.pre("save",async function(next){
 
 userSchema.methods.isPasswordCorrect= async function
 (password){
-    return  bcrypt.compare(password,this.password)
+    return await bcrypt.compare(password,this.password)
 }
+
+userSchema.methods.genereateAccesToken=function(){
+  //sign method is used to genreate Token
+    return jwt.sign(
+    {
+      _id:this.id,
+      email:this.email,
+      username:this.username,
+      fullname:this.fulllname
+    },
+    process.env.ACCESS_TOKEN_KEY,
+    {
+        expiresIn:process.env.ACCESS_TOKEN_EXPIRE
+    },
+  )
+}
+
+
+userSchema.methods.generateRefreshToken=function (){
+  //In refreshtoken information is less
+  return jwt.sign(
+    {
+      _id:this.id,    
+    },
+    process.env.REFRESH_TOKEN_KEY,
+    {
+        expiresIn:process.env.REFRESH_TOKEN_EXPIRE
+    },
+  )
+}
+
 export const User=mongoose.model("User",userSchema)
