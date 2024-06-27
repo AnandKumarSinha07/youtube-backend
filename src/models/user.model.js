@@ -65,7 +65,7 @@ userSchema.methods.isPasswordCorrect= async function
 }
 
 userSchema.methods.genereateAccesToken=function(){
-  //sign method is used to genreate Token
+    //sign method is used to genreate Token
     return jwt.sign(
     {
       _id:this.id,
